@@ -39,12 +39,13 @@ local function formatForm(options)
 end
 
 -- GET
-function curl.get(args,query)
+function curl.get(args,query,format)
    -- Args:
    if type(args) == 'string' then
       args = {
          url = args,
-         query = query
+         query = query,
+         format = format
       }
    end
 
@@ -71,12 +72,13 @@ function curl.get(args,query)
 end
 
 -- POST
-function curl.post(args,form)
+function curl.post(args,form,format)
    -- Args:
    if type(args) == 'string' then
       args = {
          url = args,
-         form = form
+         form = form,
+         format = format,
       }
    end
 
