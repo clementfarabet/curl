@@ -39,7 +39,15 @@ local function formatForm(options)
 end
 
 -- GET
-function curl.get(args)
+function curl.get(args,query)
+   -- Args:
+   if type(args) == 'string' then
+      args = {
+         url = args,
+         query = query
+      }
+   end
+
    -- URL:
    local url = args.url or (args.host .. (args.path or '/'))
    local query = args.query
@@ -63,7 +71,15 @@ function curl.get(args)
 end
 
 -- POST
-function curl.post(args)
+function curl.post(args,form)
+   -- Args:
+   if type(args) == 'string' then
+      args = {
+         url = args,
+         form = form
+      }
+   end
+
    -- URL:
    local url = args.url or (args.host .. (args.path or '/'))
    local form = args.form or error('please provide field: form')
