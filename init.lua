@@ -59,7 +59,7 @@ function curl.get(args,query,format)
    local url = formatUrl(url,query)
 
    -- GET:
-   local cmd = string.format('curl -s %s "%s"', cookie, url)
+   local cmd = string.format('curl -ks %s "%s"', cookie, url)
    local res = sys.execute(cmd)
 
    -- Format?
@@ -93,7 +93,7 @@ function curl.post(args,form,format)
    form = formatForm(form)
 
    -- GET:
-   local cmd = string.format('curl -s %s %s "%s" %s', saveCookie, cookie, url, form)
+   local cmd = string.format('curl -ks %s %s "%s" %s', saveCookie, cookie, url, form)
    local res = sys.execute(cmd)
 
    -- Format?
