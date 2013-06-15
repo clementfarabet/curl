@@ -14,7 +14,7 @@ local function formatUrl(url,options)
       query = {}
       for k,v in pairs(options) do
          v = tostring(v)
-         table.insert(query, k .. '=' .. surl.escape(v))
+         table.insert(query, surl.escape(k) .. '=' .. surl.escape(v))
       end
       query = table.concat(query,'&')
    end
@@ -54,12 +54,20 @@ function curl.get(args,query,format)
    local query = args.query
    local format = args.format or 'raw' -- or 'json'
    local cookie = (args.cookie and ('-b ' .. args.cookie)) or ''
+   local auth = args.auth
+   local verbose = args.verbose
+
+   -- Basic auth
+   if auth then
+      auth = '--user ' .. auth.user .. ':' .. auth.password
+   end
 
    -- Format URL:
    local url = formatUrl(url,query)
 
    -- GET:
-   local cmd = string.format('curl -ks %s "%s"', cookie, url)
+   local cmd = string.format('curl -ks %s %s "%s"', auth, cookie, url)
+   if verbose then print(cmd) end
    local res = sys.execute(cmd)
 
    -- Format?
@@ -88,12 +96,20 @@ function curl.post(args,form,format)
    local format = args.format or 'raw' -- or 'json'
    local cookie = (args.cookie and ('-b ' .. args.cookie)) or ''
    local saveCookie = (args.saveCookie and ('-c ' .. args.saveCookie)) or ''
+   local auth = args.auth
+   local verbose = args.verbose
+   
+   -- Basic auth
+   if auth then
+      auth = '--user ' .. auth.user .. ':' .. auth.password
+   end
 
    -- Format URL:
    form = formatForm(form)
 
    -- GET:
-   local cmd = string.format('curl -ks %s %s "%s" %s', saveCookie, cookie, url, form)
+   local cmd = string.format('curl -ks %s %s %s "%s" %s', auth, saveCookie, cookie, url, form)
+   if verbose then print(cmd) end
    local res = sys.execute(cmd)
 
    -- Format?
