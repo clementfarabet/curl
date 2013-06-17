@@ -60,6 +60,8 @@ function curl.get(args,query,format)
    -- Basic auth
    if auth then
       auth = '--user ' .. auth.user .. ':' .. auth.password
+   else
+      auth = ''
    end
 
    -- Format URL:
@@ -102,6 +104,8 @@ function curl.post(args,form,format)
    -- Basic auth
    if auth then
       auth = '--user ' .. auth.user .. ':' .. auth.password
+   else
+      auth = ''
    end
 
    -- Format URL:
