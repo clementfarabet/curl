@@ -73,8 +73,10 @@ function curl.get(args,query,format)
    local res = sys.execute(cmd)
 
    -- Format?
+   local ok
    if format == 'json' then
-      res = json.decode(res)
+      ok,res = pcall(function() return json.decode(res) end)
+      if not ok then return nil,res end
    end
 
    -- Return res
@@ -117,8 +119,10 @@ function curl.post(args,form,format)
    local res = sys.execute(cmd)
 
    -- Format?
+   local ok
    if format == 'json' then
-      res = json.decode(res)
+      ok,res = pcall(function() return json.decode(res) end)
+      if not ok then return nil,res end
    end
 
    -- Return res
